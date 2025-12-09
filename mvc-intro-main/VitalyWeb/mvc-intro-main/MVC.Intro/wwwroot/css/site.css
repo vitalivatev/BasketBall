@@ -167,3 +167,20 @@ body {
   border-radius: 8px;
   border: 1px solid #e5e7eb;
 }
+
+/* ──────────────────────────────────────────────────────────────
+   9. Events timeline
+   ────────────────────────────────────────────────────────────── */
+.timeline-card {
+  border-radius: 18px;
+  border: 1px solid #f1f3f5;
+}
+
+.timeline-table th {
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.timeline-table td {
+  vertical-align: middle;
+}
