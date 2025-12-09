@@ -1,36 +1,38 @@
 ﻿@model MVC.Intro.Models.Product
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Детайли за продукт";
 }
 
-<h1>Details</h1>
+<section class="page-hero py-4 mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+            <p class="text-uppercase text-danger fw-semibold small mb-1">Каталог</p>
+            <h1 class="h3 fw-bold mb-2">Детайли за продукт</h1>
+            <p class="text-secondary mb-0">Проверете ключовите данни за избрания продукт.</p>
+        </div>
+        <a class="btn btn-outline-dark" asp-action="Index">← Назад към продуктите</a>
+    </div>
+</section>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-    </dl>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3 text-secondary">ID</dt>
+            <dd class="col-sm-9 fw-semibold">@Html.DisplayFor(model => model.Id)</dd>
+
+            <dt class="col-sm-3 text-secondary">Име</dt>
+            <dd class="col-sm-9 fw-semibold">@Html.DisplayFor(model => model.Name)</dd>
+
+            <dt class="col-sm-3 text-secondary">Цена</dt>
+            <dd class="col-sm-9 fw-semibold">@Html.DisplayFor(model => model.Price)</dd>
+        </dl>
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+
+<div class="d-flex gap-2 mt-3">
+    <a class="btn btn-outline-dark" asp-action="Index">Назад</a>
+    <form asp-action="Delete" asp-controller="Product" asp-route-id="@Model.Id" method="post">
+        <button type="submit" class="btn btn-outline-danger">Изтрий</button>
+    </form>
 </div>
