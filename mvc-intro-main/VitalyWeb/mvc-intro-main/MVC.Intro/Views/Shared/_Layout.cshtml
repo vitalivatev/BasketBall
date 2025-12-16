@@ -22,16 +22,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["action"]?.ToString()=="Privacy" ? "active" : "")"
+                               asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Events">Events</a>
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["action"]?.ToString()=="Events" ? "active" : "")"
+                               asp-area="" asp-controller="Home" asp-action="Events">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Products</a>
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString()=="Product" ? "active" : "")"
+                               asp-area="" asp-controller="Product" asp-action="Index">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Routing" asp-action="Default">Routing</a>
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString()=="Routing" ? "active" : "")"
+                               asp-area="" asp-controller="Routing" asp-action="Default">Routing</a>
                         </li>
                     </ul>
                 </div>

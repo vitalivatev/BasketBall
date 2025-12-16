@@ -32,7 +32,7 @@
 
 <div class="d-flex gap-2 mt-3">
     <a class="btn btn-outline-dark" asp-action="Index">Назад</a>
-    <form asp-action="Delete" asp-controller="Product" asp-route-id="@Model.Id" method="post">
+    <form asp-action="Delete" asp-controller="Product" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете продукта?');">
         <button type="submit" class="btn btn-outline-danger">Изтрий</button>
     </form>
 </div>

@@ -136,7 +136,7 @@ body {
    ────────────────────────────────────────────────────────────── */
 .legend-card {
   border: 1px solid #f1f3f5;
-  border-radius: 18px;
+  border-radius: 12px;
 }
 
 .legend-table th {
@@ -151,10 +151,10 @@ body {
 .legend-photo {
   width: 72px;
   height: 72px;
-  object-fit: cover;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid #e5e7eb;
   background: #fff;
+  object-fit: cover;
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -183,4 +183,13 @@ body {
 
 .timeline-table td {
   vertical-align: middle;
+}
+
+.table thead th {
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.table-hover tbody tr:hover {
+  background: rgba(0,0,0,0.03);
 }
