@@ -32,6 +32,16 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 
+            <div class="col-md-6">
+              <label asp-for="ImagePath" class="form-label"></label>
+              <input asp-for="ImagePath" class="form-control" placeholder="Пример: images/bulssHudie.jpg" />
+               <span asp-validation-for="ImagePath" class="text-danger"></span>
+                 <small class="form-text text-muted">
+                 Използвай име на файл от папка <code>images</code>, напр. <code>images/bulssHudie.jpg</code>.
+              </small>
+            </div>
+
+
             <div class="col-12 d-flex gap-2">
                 <button type="submit" class="btn btn-danger">Запази</button>
                 <a asp-action="Index" class="btn btn-outline-secondary">Отказ</a>

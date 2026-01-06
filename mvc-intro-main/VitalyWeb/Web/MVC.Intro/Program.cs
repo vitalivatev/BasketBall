@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MVC.Intro.Data;
 using MVC.Intro.Services;
+using MVC.Intro.Models;
 
 namespace MVC.Intro
 {
@@ -10,9 +13,19 @@ namespace MVC.Intro
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                var folder = Environment.SpecialFolder.LocalApplicationData;
+                var path = Environment.GetFolderPath(folder);
+                var dbPath = Path.Join(path, "products.db");
+                options.UseSqlite($"Data Source={dbPath}");
+            });
+            builder.Services
+                .AddIdentity<Users, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<ProductService>();
-            builder.Services.AddDbContext<AppDbContext>();
 
             var app = builder.Build();
 
@@ -29,6 +42,7 @@ namespace MVC.Intro
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

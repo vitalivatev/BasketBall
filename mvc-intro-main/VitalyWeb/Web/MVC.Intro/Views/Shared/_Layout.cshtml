@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MVC.Intro.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="@ViewData["BodyClass"]">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -37,6 +37,36 @@
                             <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString()=="Routing" ? "active" : "")"
                                asp-area="" asp-controller="Routing" asp-action="Default">Players</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav d-flex flex-row align-items-center">
+                        <li class="nav-item me-3 d-flex align-items-center">
+                            <button id="theme-toggle" class="btn btn-link text-dark border-0 p-2" style="font-size: 1.5rem; cursor: pointer;" title="Превключи тема">
+                                💡
+                            </button>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var currentUser = await UserManager.GetUserAsync(User);
+                            <li class="nav-item me-3 d-flex align-items-center">
+                                <span class="badge bg-warning text-dark px-3 py-2">Здравей, @(currentUser?.FullName ?? currentUser?.Email ?? User.Identity.Name)!</span>
+                            </li>
+                            <li class="nav-item d-flex align-items-center">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="mb-0">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Изход</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString()=="Account" && ViewContext.RouteData.Values["action"]?.ToString()=="Login" ? "active" : "")"
+                                   asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString()=="Account" && ViewContext.RouteData.Values["action"]?.ToString()=="Register" ? "active" : "")"
+                                   asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

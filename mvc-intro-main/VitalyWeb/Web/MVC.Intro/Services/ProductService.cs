@@ -31,16 +31,20 @@ namespace MVC.Intro.Services
 
         public Product AddProduct(Product product)
         {
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product), "Product is null");
+            }
+
             var toAdd = new Product
             {
                 Name = product.Name,
-                Price = product.Price
+                Price = product.Price,
+                ImagePath = string.IsNullOrWhiteSpace(product.ImagePath)
+                    ? null
+                    : product.ImagePath.Trim()
             };
             _logger.LogInformation("Adding product: {ProductName} with price {ProductPrice}", toAdd.Name, toAdd.Price);
-            if (product == null)
-            {
-                throw new ArgumentNullException("Product is null");
-            }
             toAdd.Id = Guid.NewGuid();
             if (!toAdd.Name.StartsWith(ProductPrefix))
             {

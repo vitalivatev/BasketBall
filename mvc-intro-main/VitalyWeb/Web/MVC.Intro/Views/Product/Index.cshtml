@@ -35,6 +35,9 @@
                             <th scope="col" class="text-center" style="width: 80px;">
                                 @Html.DisplayNameFor(m => m.Id)
                             </th>
+                            <th scope="col" style="width: 90px;">
+                                Снимка
+                            </th>
                             <th scope="col">
                                 @Html.DisplayNameFor(m => m.Name)
                             </th>
@@ -50,6 +53,12 @@
                             <tr>
                                 <td class="text-center">
                                     @Html.DisplayFor(m => item.Id)
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                                    {
+                                        <img src="~/images/@item.ImagePath" alt="@item.Name" class="product-thumb" />
+                                    }
                                 </td>
                                 <td>
                                     <div class="fw-semibold">@Html.DisplayFor(m => item.Name)</div>
