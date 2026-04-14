@@ -1,0 +1,74 @@
+@using System.Globalization
+@model MVC.Intro.Models.CartViewModel
+@{
+    ViewData["Title"] = "Количка";
+    var hasItems = Model.Items.Any();
+}
+
+<section class="page-hero py-4 mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+            <p class="text-uppercase text-danger fw-semibold small mb-1">Поръчка</p>
+            <h1 class="h3 fw-bold mb-2">Твоята количка</h1>
+            <p class="text-secondary mb-0">Провери избраните продукти преди поръчка.</p>
+        </div>
+        <a class="btn btn-outline-dark" asp-controller="Product" asp-action="Index">Към продуктите</a>
+    </div>
+</section>
+
+<div class="card shadow-sm">
+    @if (!hasItems)
+    {
+        <div class="card-body text-center py-5">
+            <div style="font-size: 2rem;">🛒</div>
+            <p class="text-secondary mb-0 mt-2">Количката е празна.</p>
+        </div>
+    }
+    else
+    {
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Продукт</th>
+                            <th class="text-center" style="width: 120px;">Брой</th>
+                            <th class="text-end" style="width: 160px;">Ед. цена</th>
+                            <th class="text-end" style="width: 160px;">Сума</th>
+                            <th class="text-end" style="width: 150px;">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.ProductName</td>
+                                <td class="text-center">@item.Quantity</td>
+                                <td class="text-end">@item.UnitPrice.ToString("C2", new CultureInfo("bg-BG"))</td>
+                                <td class="text-end fw-semibold">@item.LineTotal.ToString("C2", new CultureInfo("bg-BG"))</td>
+                                <td class="text-end">
+                                    <form asp-action="Remove" asp-controller="Cart" asp-route-id="@item.ProductId" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Премахни</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <span class="text-secondary me-2">Общо артикули:</span>
+                <span class="fw-semibold">@Model.TotalItems</span>
+            </div>
+            <div>
+                <span class="text-secondary me-2">Крайна сума:</span>
+                <span class="fw-bold">@Model.GrandTotal.ToString("C2", new CultureInfo("bg-BG"))</span>
+            </div>
+            <form asp-action="Clear" asp-controller="Cart" method="post">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Изчисти количката</button>
+            </form>
+        </div>
+    }
+</div>

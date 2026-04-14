@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.Json
+@{
+    var cartCount = 0;
+    var cartJson = Context.Session.GetString("cart-items");
+    if (!string.IsNullOrWhiteSpace(cartJson))
+    {
+        var cartItems = JsonSerializer.Deserialize<Dictionary<Guid, int>>(cartJson);
+        cartCount = cartItems?.Values.Sum() ?? 0;
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -40,15 +50,26 @@
                     </ul>
                     <ul class="navbar-nav d-flex flex-row align-items-center">
                         <li class="nav-item me-3 d-flex align-items-center">
+                            <a class="nav-link text-dark p-2 position-relative @(ViewContext.RouteData.Values["controller"]?.ToString()=="Cart" ? "active" : "")" asp-area="" asp-controller="Cart" asp-action="Index" title="Кошница" aria-label="Кошница" style="font-size: 1.5rem;">
+                                🛒
+                                @if (cartCount > 0)
+                                {
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+                                        @cartCount
+                                    </span>
+                                }
+                            </a>
+                        </li>
+                        <li class="nav-item me-3 d-flex align-items-center">
                             <button id="theme-toggle" class="btn btn-link text-dark border-0 p-2" style="font-size: 1.5rem; cursor: pointer;" title="Превключи тема">
                                 💡
                             </button>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity?.IsAuthenticated == true)
                         {
                             var currentUser = await UserManager.GetUserAsync(User);
                             <li class="nav-item me-3 d-flex align-items-center">
-                                <span class="badge bg-warning text-dark px-3 py-2">Здравей, @(currentUser?.FullName ?? currentUser?.Email ?? User.Identity.Name)!</span>
+                                <span class="badge bg-warning text-dark px-3 py-2">Здравей, @(currentUser?.FullName ?? currentUser?.Email ?? User.Identity?.Name)!</span>
                             </li>
                             <li class="nav-item d-flex align-items-center">
                                 <form asp-controller="Account" asp-action="Logout" method="post" class="mb-0">

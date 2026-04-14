@@ -40,9 +40,7 @@ namespace MVC.Intro.Services
             {
                 Name = product.Name,
                 Price = product.Price,
-                ImagePath = string.IsNullOrWhiteSpace(product.ImagePath)
-                    ? null
-                    : product.ImagePath.Trim()
+                ImagePath = NormalizeImagePath(product.ImagePath)
             };
             _logger.LogInformation("Adding product: {ProductName} with price {ProductPrice}", toAdd.Name, toAdd.Price);
             toAdd.Id = Guid.NewGuid();
@@ -68,6 +66,23 @@ namespace MVC.Intro.Services
         private void DecorateProductName(Product product)
         {
             product.Name = ProductPrefix + product.Name;
+        }
+
+        private static string? NormalizeImagePath(string? imagePath)
+        {
+            if (string.IsNullOrWhiteSpace(imagePath))
+            {
+                return null;
+            }
+
+            var normalized = imagePath.Trim().Replace("\\", "/").TrimStart('/');
+            const string imageFolderPrefix = "images/";
+            if (normalized.StartsWith(imageFolderPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                normalized = normalized[imageFolderPrefix.Length..];
+            }
+
+            return normalized;
         }
 
     }

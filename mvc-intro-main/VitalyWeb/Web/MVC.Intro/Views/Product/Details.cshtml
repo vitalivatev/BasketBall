@@ -3,6 +3,21 @@
 
 @{
     ViewData["Title"] = "Детайли за продукт";
+    string BuildImageUrl(string? imagePath)
+    {
+        if (string.IsNullOrWhiteSpace(imagePath))
+        {
+            return string.Empty;
+        }
+
+        var normalized = imagePath.Trim().Replace("\\", "/").TrimStart('/');
+        if (normalized.StartsWith("images/", StringComparison.OrdinalIgnoreCase))
+        {
+            normalized = normalized["images/".Length..];
+        }
+
+        return Url.Content($"~/images/{normalized}");
+    }
 }
 
 <section class="page-hero py-4 mb-4">
@@ -33,9 +48,12 @@
 
             <dt class="col-sm-3 text-secondary">Снимка</dt>
             <dd class="col-sm-9">
-                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                @{
+                    var imageUrl = BuildImageUrl(Model.ImagePath);
+                }
+                @if (!string.IsNullOrEmpty(imageUrl))
                 {
-                    <img src="@Url.Content($"~/{Model.ImagePath}")"
+                    <img src="@imageUrl"
                          alt="@Model.Name"
                          style="max-width:300px; border-radius:6px;" />
                 }
