@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Количка за пазаруване</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🛒 Моята Количка</h1>
+        <div class="cart-icon">
+            <span id="cart-count">0</span> продукта в количката
+        </div>
+    </header>
+
+    <main>
+        <section class="products">
+            <h2>Продукти</h2>
+            <div class="product-grid" id="product-grid">
+                <!-- Продуктите ще се заредят тук чрез JavaScript -->
+            </div>
+        </section>
+
+        <section class="cart">
+            <h2>Количка</h2>
+            <div class="cart-items" id="cart-items">
+                <p class="empty-cart">Количката е празна</p>
+            </div>
+            <div class="cart-summary">
+                <div class="total">
+                    <strong>Общо: <span id="total-price">0.00</span> лв.</strong>
+                </div>
+                <button id="checkout-btn" class="checkout-btn" disabled>Поръчай</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
